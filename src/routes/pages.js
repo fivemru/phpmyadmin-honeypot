@@ -1,6 +1,6 @@
 const express = require('express');
 const nanoid = require('nanoid');
-const addPMACookies = require('../utils/addPMACookies');
+const { addPMACookies } = require('../utils/addPMACookies');
 const { saveAuthAttempt } = require('../utils/saveToFile');
 
 const mockMD5 = nanoid.customAlphabet('abcdef0123456789', 32);

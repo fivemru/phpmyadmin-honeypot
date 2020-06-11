@@ -18,4 +18,4 @@ function addPMACookies(req, res, next) {
   next();
 }
 
-module.exports = addPMACookies;
+module.exports = { addPMACookies };

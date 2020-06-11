@@ -4,14 +4,13 @@ const fields = [
   'TG_NOTIFY_CHAT_ID',
   'TG_NOTIFY_SILENT',
   'MOUNT_URL',
+  'SAVE_REQUEST',
 ];
 const env = {};
 
 const valueMap = {
   true: true,
   false: false,
-  '0': 0,
-  '1': 1,
 };
 
 for (const key of fields) {
@@ -34,4 +33,4 @@ for (const key of fields) {
   env[key] = value;
 }
 
-module.exports = env;
+module.exports = { ...env, env };

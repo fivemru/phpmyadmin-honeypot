@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const dayjs = require('dayjs');
 const { sendTgNotify } = require('./sendTgNotify');
+const { SAVE_REQUEST = false } = require('../config/env');
 
 fs.createWriteStream;
 const root = path.resolve(__dirname, '../../logs');
@@ -31,7 +32,7 @@ function removeFields(fileds = [], data) {
   return res;
 }
 
-async function getCurrLogDir(req) {
+async function getLogDir(req) {
   let ip = 'unknown_ip';
 
   if (req && req.header && req.realIp) {
@@ -47,13 +48,13 @@ async function getCurrLogDir(req) {
 }
 
 async function saveRequest(req, err) {
-  const currLogDir = await getCurrLogDir(req);
+  const currLogDir = await getLogDir(req);
   const reqPath = path.join(currLogDir, './req.txt');
   const errPath = path.join(currLogDir, './err.txt');
   const ts = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
 
   // save req
-  if (req && req.header) {
+  if (SAVE_REQUEST && req && req.header) {
     const host = req.header('host') || '-';
     const query = JSON.stringify(req.query);
     const body = JSON.stringify(req.body);
@@ -73,7 +74,7 @@ async function saveRequest(req, err) {
 
 async function saveAuthAttempt(req) {
   try {
-    const currLogDir = await getCurrLogDir(req);
+    const currLogDir = await getLogDir(req);
     const credPath = path.join(currLogDir, './cred.txt');
 
     const login = req.body.pma_username || '';

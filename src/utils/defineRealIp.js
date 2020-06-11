@@ -4,4 +4,4 @@ function defineRealIp(req, res, next) {
   next();
 }
 
-module.exports = defineRealIp;
+module.exports = { defineRealIp };
