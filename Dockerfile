@@ -2,8 +2,9 @@ FROM node:12.18-alpine3.12 as base
 
 WORKDIR /usr/src/app
 
+ENV NODE_ENV=production
 ENV PORT=3000
-ARG NODE_ENV=production
+ENV MOUNT_URL=/phpmyadmin/
 
 COPY package.json package-lock.json ./
 RUN npm install --production --no-optional
