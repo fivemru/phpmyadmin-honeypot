@@ -7,14 +7,14 @@ const logRequest = require('./utils/logRequest');
 const { saveRequest } = require('./utils/saveToFile');
 
 const PUBLIC_PATH = path.resolve(__dirname, './public');
-const VIEWS_ROOT = path.resolve(__dirname, './views');
+const VIEWS_DIR = path.resolve(__dirname, './views');
 
-const { PORT = 3000, URL_PREFIX = 'phpmyadmin' } = process.env;
+const { PORT = 3000, MOUNT_URL = '/phpmyadmin/' } = process.env;
 
 const app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', VIEWS_ROOT);
+app.set('views', VIEWS_DIR);
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
@@ -24,12 +24,20 @@ app.use((req, res, next) => {
   next();
 });
 
+// redirect all requests to mount url
+app.use((req, res, next) => {
+  if (!req.originalUrl.startsWith(MOUNT_URL)) {
+    return res.redirect(`${MOUNT_URL}`);
+  }
+  next();
+});
+
 // pages
-app.use(`/${URL_PREFIX}`, assets, [logRequest, pages]);
+app.use(MOUNT_URL, assets, [logRequest, pages]);
 
 // 404
 app.use(async (req, res) => {
-  await saveRequest(req, { code: 404, message: '404 not found' });
+  await saveRequest(req);
   res.status(404).sendFile(`${PUBLIC_PATH}/404.html`);
 });
 
@@ -40,8 +48,7 @@ app.use(async (err, req, res, next) => {
   res.status(404).sendFile(`${PUBLIC_PATH}/404.html`);
 });
 
-// 500
-// eslint-disable-next-line no-unused-vars
+// global
 process.on('unhandledRejection', async (err) => {
   console.log('unhandledRejection', err);
   await saveRequest(null, err);

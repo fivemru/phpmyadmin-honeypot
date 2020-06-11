@@ -59,7 +59,7 @@ async function saveRequest(req, err) {
     const rmFields = ['pma_collation_connection', 'pma_lang', 'phpMyAdmin'];
     const cookies = JSON.stringify(removeFields(rmFields, req.cookies));
 
-    const reqData = `${ts}  host: ${host} method: ${req.method} query: ${query} body: ${body} cookies: ${cookies}`;
+    const reqData = `${ts}  host: ${host} method: ${req.method} originalUrl: ${req.originalUrl} query: ${query} body: ${body} cookies: ${cookies}`;
     await writeLineToFile(reqPath, reqData.substr(0, 4000));
   }
 

@@ -7,9 +7,16 @@ ARG NODE_ENV=production
 
 COPY package.json package-lock.json ./
 RUN npm install --production --no-optional
+
+# build
+FROM base as build
+RUN npm install --only=dev --no-optional
 COPY . .
 RUN npm run lint
 
-EXPOSE $PORT
+# release
+FROM base as release
+COPY --from=build /usr/src/app/dist ./dist
 
+EXPOSE $PORT
 ENTRYPOINT [ "node", "./dist/index.js" ]
