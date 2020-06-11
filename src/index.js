@@ -5,6 +5,7 @@ const pages = require('./routes/pages');
 const assets = require('./routes/assets');
 const logRequest = require('./utils/logRequest');
 const { saveRequest } = require('./utils/saveToFile');
+const defineRealIp = require('./utils/defineRealIp');
 
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
 const VIEWS_DIR = path.resolve(__dirname, './views');
@@ -13,6 +14,7 @@ const { PORT = 3000, MOUNT_URL = '/phpmyadmin/' } = process.env;
 
 const app = express();
 
+app.use(defineRealIp);
 app.set('view engine', 'ejs');
 app.set('views', VIEWS_DIR);
 app.use(cookieParser());
