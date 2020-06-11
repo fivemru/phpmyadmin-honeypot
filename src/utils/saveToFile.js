@@ -34,7 +34,7 @@ function removeFields(fileds = [], data) {
 async function getCurrLogDir(req) {
   let ip = 'unknown_ip';
 
-  if (req && req.header && req.reqlIp) {
+  if (req && req.header && req.realIp) {
     ip = req.realIp.replace(/[.:]+/g, '_');
   }
 

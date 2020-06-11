@@ -1,13 +1,11 @@
 const LRU = require('lru-cache');
+const { TG_NOTIFY_CHAT_ID, TG_NOTIFY_SILENT } = require('../config/env');
+const { tg } = require('../config/telegram');
 
-const options = {
-  max: 500,
-  maxAge: 1 * 60 * 60 * 1e3,
-};
+// cache
+const cache = new LRU({ max: 500, maxAge: 1 * 60 * 60 * 1e3 });
 
-const cache = new LRU(options);
-
-function sendTgNotify(ip, data) {
+async function sendTgNotify(ip, data) {
   // skip notify
   if (cache.has(ip)) {
     return;
@@ -15,8 +13,17 @@ function sendTgNotify(ip, data) {
 
   cache.set(ip, true);
 
-  const msg = `ip: <code>${ip}</code>, try <code>${data}</code>`;
-  console.log('notify', msg);
+  const msg = `#pma_honeypot #${ip.replace(/[^a-z\d_]+/g, '_')}
+  <b>ip:</b> <code>${ip}</code>
+  <b>try:</b> <code>${data}</code>`;
+
+  // send message
+  await tg
+    .sendMessage(TG_NOTIFY_CHAT_ID, msg, {
+      parse_mode: 'HTML',
+      disable_notification: TG_NOTIFY_SILENT,
+    })
+    .catch((err) => console.error(`sendTgNotify.catch:`, err));
 }
 
 module.exports = { sendTgNotify };

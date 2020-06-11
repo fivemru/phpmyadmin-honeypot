@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const { PORT, MOUNT_URL = '/' } = require('./config/env');
 const pages = require('./routes/pages');
 const assets = require('./routes/assets');
 const logRequest = require('./utils/logRequest');
@@ -9,8 +10,6 @@ const defineRealIp = require('./utils/defineRealIp');
 
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
 const VIEWS_DIR = path.resolve(__dirname, './views');
-
-const { PORT = 3000, MOUNT_URL = '/phpmyadmin/' } = process.env;
 
 const app = express();
 
