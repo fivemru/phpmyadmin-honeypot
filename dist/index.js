@@ -12,17 +12,21 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', VIEWS_ROOT);
+app.use(express.urlencoded({ extended: true }));
 
+// headets
 app.use((req, res, next) => {
   res.setHeader('x-powered-by', 'PHP/5.4.16');
   next();
 });
 
+// logger
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`);
   next();
 });
 
+// pages
 app.use(`/${URL_PREFIX}`, assets, pages);
 
 // 404

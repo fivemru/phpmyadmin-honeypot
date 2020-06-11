@@ -14,9 +14,22 @@ router.get('/index.php', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  console.log('main pagec');
   const token = mockMD5();
   res.render('main', { token });
+});
+
+router.post(/\/(index\.php)?/, (req, res) => {
+  // params
+  const { pma_username = '' } = req.body || {};
+  console.log('POST', req.body);
+  // pma_username: testUser
+  // pma_password: testPass
+  // server: 1
+  // target: index.php
+  // token: 84549e950496b70673f14775e4c07ebf
+
+  const token = mockMD5();
+  res.render('wrongPass', { token, pma_username });
 });
 
 module.exports = router;
