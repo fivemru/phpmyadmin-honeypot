@@ -6,7 +6,7 @@ const assets = require('./routes/assets');
 const logRequest = require('./utils/logRequest');
 const { saveRequest } = require('./utils/saveToFile');
 
-const PUBLIC_PATH = path.resolve(__dirname, './public');
+const PUBLIC_PATH = path.resolve(__dirname, '../public');
 const VIEWS_DIR = path.resolve(__dirname, './views');
 
 const { PORT = 3000, MOUNT_URL = '/phpmyadmin/' } = process.env;

@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "nodemon ./dist/index.js",
-    "lint": "eslint ./dist/"
+    "watch": "nodemon ./src/index.js",
+    "lint": "eslint ./src/"
   },
   "nodemonConfig": {
     "watch": [
-      "dist/"
+      "src/"
     ],
     "ext": "js,json"
   },

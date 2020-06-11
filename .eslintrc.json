@@ -8,6 +8,5 @@
   "parserOptions": {
     "ecmaVersion": 11
   },
-  "rules": {},
-  "ignorePatterns": ["dist/public/**/*.js"]
+  "rules": {}
 }

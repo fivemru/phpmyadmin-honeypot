@@ -22,4 +22,4 @@ COPY --from=build /usr/src/app/dist ./dist
 VOLUME [ "/usr/src/app/logs" ]
 
 EXPOSE $PORT
-ENTRYPOINT [ "node", "./dist/index.js" ]
+ENTRYPOINT [ "node", "./src/index.js" ]
