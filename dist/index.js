@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const pages = require('./routes/pages');
 const assets = require('./routes/assets');
 const logRequest = require('./utils/logRequest');
+const { saveRequest } = require('./utils/saveToFile');
 
 const PUBLIC_PATH = path.resolve(__dirname, './public');
 const VIEWS_ROOT = path.resolve(__dirname, './views');
@@ -27,8 +28,24 @@ app.use((req, res, next) => {
 app.use(`/${URL_PREFIX}`, assets, [logRequest, pages]);
 
 // 404
-app.use(function (req, res) {
+app.use(async (req, res) => {
+  await saveRequest(req, { code: 404, message: '404 not found' });
   res.status(404).sendFile(`${PUBLIC_PATH}/404.html`);
+});
+
+// 500
+// eslint-disable-next-line no-unused-vars
+app.use(async (err, req, res, next) => {
+  await saveRequest(req, err);
+  res.status(404).sendFile(`${PUBLIC_PATH}/404.html`);
+});
+
+// 500
+// eslint-disable-next-line no-unused-vars
+process.on('unhandledRejection', async (err) => {
+  console.log('unhandledRejection', err);
+  await saveRequest(null, err);
+  process.exit(1);
 });
 
 app.listen(PORT, () => {

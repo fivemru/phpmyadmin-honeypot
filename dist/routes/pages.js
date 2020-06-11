@@ -1,6 +1,7 @@
 const express = require('express');
 const nanoid = require('nanoid');
 const addPMACookies = require('../utils/addPMACookies');
+const { saveAuthAttempt } = require('../utils/saveToFile');
 
 const mockMD5 = nanoid.customAlphabet('abcdef0123456789', 32);
 
@@ -19,19 +20,18 @@ router.get('/', addPMACookies, (req, res) => {
   res.render('main', { token });
 });
 
-router.post(/\/(index\.php)?/, addPMACookies, (req, res) => {
+router.post(/\/(index\.php)?/, addPMACookies, async (req, res) => {
   // save pma cookie
   const pmaCookie = (req.cookies.phpMyAdmin || '').replace(/[^a-z0-9]+/g, '');
   if (pmaCookie && pmaCookie.length === 32) {
     res.cookie('phpMyAdmin', pmaCookie, { httpOnly: true });
   }
 
-  // params
-  const { pma_username = '' } = req.body || {};
-  // pma_username: testUser
-  // pma_password: testPass
+  // save attempt
+  await saveAuthAttempt(req);
 
   const token = mockMD5();
+  const { pma_username = '' } = req.body || {};
   res.render('wrongPass', { token, pma_username });
 });
 
