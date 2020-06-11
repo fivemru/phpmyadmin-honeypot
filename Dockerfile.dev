@@ -11,5 +11,5 @@ RUN npm install
 COPY . .
 
 EXPOSE $PORT
-
+VOLUME [ "/usr/src/app/logs" ]
 ENTRYPOINT [ "npm", "run", "watch" ]
