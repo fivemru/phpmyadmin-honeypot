@@ -33,8 +33,8 @@ function removeFields(fileds = [], data) {
 async function getCurrLogDir(req) {
   let ip = 'unknown_ip';
 
-  if (req && req.header && req.ip) {
-    ip = (req.header('cf-connecting-ip') || req.ip).replace(/[.:]+/g, '_');
+  if (req && req.header && req.reqlIp) {
+    ip = req.realIp.replace(/[.:]+/g, '_');
   }
 
   const datePath = dayjs().format('YYYY/MM-DD');
