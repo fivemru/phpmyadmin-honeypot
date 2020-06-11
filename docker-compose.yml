@@ -1,0 +1,23 @@
+version: "3.5"
+services:
+  fake_phpmyadmin_dev:
+    container_name: fake_phpmyadmin_dev
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - /usr/src/app/node_modules/
+      - ./:/usr/src/app/
+
+  fake_phpmyadmin:
+    container_name: fake_phpmyadmin
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - /usr/src/app/node_modules/
+      - ./:/usr/src/app/

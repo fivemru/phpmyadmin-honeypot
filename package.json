@@ -1,0 +1,33 @@
+{
+  "name": "phpmyadmin-honeypot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon ./dist/index.js",
+    "lint": "eslint ./dist/"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "dist/"
+    ],
+    "ext": "js,json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/fivem-utils/phpmyadmin-honeypot.git"
+  },
+  "author": "fivem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/fivem-utils/phpmyadmin-honeypot/issues"
+  },
+  "homepage": "https://gitlab.com/fivem-utils/phpmyadmin-honeypot#readme",
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
