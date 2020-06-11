@@ -1,5 +1,6 @@
 const express = require('express');
 const nanoid = require('nanoid');
+const addPMACookies = require('../utils/addPMACookies');
 
 const mockMD5 = nanoid.customAlphabet('abcdef0123456789', 32);
 
@@ -9,24 +10,26 @@ router.get('/url.php', (req, res) => {
   res.redirect('https://www.phpmyadmin.net/');
 });
 
-router.get('/index.php', (req, res) => {
+router.get('/index.php', addPMACookies, (req, res) => {
   res.redirect('./');
 });
 
-router.get('/', (req, res) => {
+router.get('/', addPMACookies, (req, res) => {
   const token = mockMD5();
   res.render('main', { token });
 });
 
-router.post(/\/(index\.php)?/, (req, res) => {
+router.post(/\/(index\.php)?/, addPMACookies, (req, res) => {
+  // save pma cookie
+  const pmaCookie = (req.cookies.phpMyAdmin || '').replace(/[^a-z0-9]+/g, '');
+  if (pmaCookie && pmaCookie.length === 32) {
+    res.cookie('phpMyAdmin', pmaCookie, { httpOnly: true });
+  }
+
   // params
   const { pma_username = '' } = req.body || {};
-  console.log('POST', req.body);
   // pma_username: testUser
   // pma_password: testPass
-  // server: 1
-  // target: index.php
-  // token: 84549e950496b70673f14775e4c07ebf
 
   const token = mockMD5();
   res.render('wrongPass', { token, pma_username });

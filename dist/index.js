@@ -1,7 +1,9 @@
 const path = require('path');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const pages = require('./routes/pages');
 const assets = require('./routes/assets');
+const logRequest = require('./utils/logRequest');
 
 const PUBLIC_PATH = path.resolve(__dirname, './public');
 const VIEWS_ROOT = path.resolve(__dirname, './views');
@@ -12,22 +14,17 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', VIEWS_ROOT);
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-// headets
+// headers
 app.use((req, res, next) => {
   res.setHeader('x-powered-by', 'PHP/5.4.16');
   next();
 });
 
-// logger
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
-  next();
-});
-
 // pages
-app.use(`/${URL_PREFIX}`, assets, pages);
+app.use(`/${URL_PREFIX}`, assets, [logRequest, pages]);
 
 // 404
 app.use(function (req, res) {
