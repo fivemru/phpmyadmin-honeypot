@@ -17,7 +17,7 @@ Build production image and run it.
 
 ```bash
 # build prod image
-docker-compose -f ./docker-compose.dev.yml build prod
+docker-compose -f ./docker-compose.dev.yml build --no-cache prod
 # launch prod image
 docker-compose -f ./docker-compose.yml up -d
 ```
