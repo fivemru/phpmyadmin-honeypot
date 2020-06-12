@@ -13,7 +13,7 @@ build:
   only:
     refs:
       - tags
-      - master
+      # - master
   script:
     - echo 'Building...'
     - echo "TAG ${CI_COMMIT_TAG}"
