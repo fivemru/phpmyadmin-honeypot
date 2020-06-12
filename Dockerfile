@@ -11,7 +11,7 @@ ENV MOUNT_PATH=/phpmyadmin/
 FROM base AS build-app
 RUN npm install --only=dev --no-optional
 COPY . .
-RUN npm run lint && pwd && ls -la
+RUN npm run lint
 
 # release
 FROM base AS release
