@@ -1,0 +1,26 @@
+variables:
+  CURRENT_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_TAG
+  RELEASE_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH:latest
+
+stages:
+  - build
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  only:
+    refs:
+      - tags
+      - master
+  script:
+    - echo 'Building...'
+    - echo "TAG ${CI_COMMIT_TAG}"
+    - docker login -u $CI_REGISTRY_USER -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker pull $RELEASE_IMAGE || true
+    - docker build --cache-from $RELEASE_IMAGE --tag $CURRENT_IMAGE .
+    - docker tag $CURRENT_IMAGE $RELEASE_IMAGE
+    - docker push $CURRENT_IMAGE
+    - docker push $RELEASE_IMAGE
+    - echo 'Done!'
