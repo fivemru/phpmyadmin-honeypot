@@ -1,7 +1,7 @@
 const express = require('express');
 const nanoid = require('nanoid');
 const { addPMACookies } = require('../utils/addPMACookies');
-const { saveAuthAttempt } = require('../utils/saveToFile');
+const { saveAuthAttempt, saveRequest } = require('../utils/saveToFile');
 
 const mockMD5 = nanoid.customAlphabet('abcdef0123456789', 32);
 
@@ -29,6 +29,7 @@ router.post(/\/(index\.php)?/, addPMACookies, async (req, res) => {
 
   // save attempt
   await saveAuthAttempt(req);
+  await saveRequest(req);
 
   const token = mockMD5();
   const { pma_username = '' } = req.body || {};

@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 
 const fields = [
@@ -36,5 +37,10 @@ for (const key of fields) {
 }
 
 env.PUBLIC_PATH = path.resolve(__dirname, '../../public');
+
+// log dir
+fs.createWriteStream;
+env.LOGS_DIR = path.resolve(__dirname, '../../logs');
+fs.promises.mkdir(env.LOGS_DIR, { recursive: true });
 
 module.exports = { ...env, env };
