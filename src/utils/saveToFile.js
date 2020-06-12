@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const dayjs = require('dayjs');
+const { logger } = require('../utils/logger');
 const { sendTgNotify } = require('./sendTgNotify');
 const { SAVE_REQUEST = false } = require('../config/env');
 
@@ -9,7 +10,7 @@ const root = path.resolve(__dirname, '../../logs');
 
 fs.promises
   .mkdir(root, { recursive: true })
-  .catch((err) => console.log('mkdir.catch: ', err));
+  .catch((err) => logger('mkdir.catch: ', err));
 
 async function writeLineToFile(filepath = `${root}/output.log`, data = '') {
   return new Promise((resolve) => {
@@ -90,7 +91,7 @@ async function saveAuthAttempt(req) {
 
     await saveRequest(req);
   } catch (err) {
-    console.log('logAuthAttempt.catch', err);
+    logger('logAuthAttempt.catch', err);
   }
 }
 

@@ -1,4 +1,5 @@
 const dayjs = require('dayjs');
+const { logger } = require('../utils/logger');
 
 function getRequestInfo(req) {
   let info = '';
@@ -18,7 +19,7 @@ function getRequestInfo(req) {
 
 function logRequest(req, res, next) {
   const info = getRequestInfo(req);
-  console.log(info);
+  logger(info);
   next();
 }
 

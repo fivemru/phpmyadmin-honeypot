@@ -1,4 +1,5 @@
 const LRU = require('lru-cache');
+const { logger } = require('./logger');
 const { TG_NOTIFY_CHAT_ID, TG_NOTIFY_SILENT } = require('../config/env');
 const { tg } = require('../config/telegram');
 
@@ -23,7 +24,7 @@ async function sendTgNotify(ip, data) {
       parse_mode: 'HTML',
       disable_notification: TG_NOTIFY_SILENT,
     })
-    .catch((err) => console.error(`sendTgNotify.catch:`, err));
+    .catch((err) => logger(`sendTgNotify.catch:`, err));
 }
 
 module.exports = { sendTgNotify };

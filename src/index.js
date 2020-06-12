@@ -6,6 +6,7 @@ const {
   PUBLIC_PATH,
   MOUNT_PATH = '/phpmyadmin/',
 } = require('./config/env');
+const { logger } = require('./utils/logger');
 const { logRequest } = require('./utils/logRequest');
 const { saveRequest } = require('./utils/saveToFile');
 const { defineRealIp } = require('./utils/defineRealIp');
@@ -52,11 +53,11 @@ app.use(async (err, req, res, next) => {
 
 // global
 process.on('unhandledRejection', async (err) => {
-  console.log('unhandledRejection', err);
+  logger('unhandledRejection', err);
   await saveRequest(null, err);
   process.exit(1);
 });
 
 app.listen(PORT, () => {
-  console.log(`app listen port ${PORT}`);
+  logger(`app listen port ${PORT}`);
 });
