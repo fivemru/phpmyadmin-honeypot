@@ -1,6 +1,6 @@
 # phpmyadmin honeypot
 
-> A simple nodejs application that shows the login form in phpmyadmin.
+> A simple nodejs application that shows the login form of phpmyadmin.
 >
 > After sending the form with any login / password, a message with this data is sent to the Telegram messenger.
 
@@ -8,7 +8,7 @@
 
 ## Usage
 
-Rename `.env.examples` to `.env` and and configure.
+Rename `.env.examples` to `.env` and configure it.
 Fill the `TG_BOT_TOKEN` and `TG_NOTIFY_CHAT_ID` keys with your telegram bot api token and chat/-channel id.
 
 ### With docker
