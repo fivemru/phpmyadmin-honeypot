@@ -3,7 +3,7 @@ const fields = [
   'TG_BOT_TOKEN',
   'TG_NOTIFY_CHAT_ID',
   'TG_NOTIFY_SILENT',
-  'MOUNT_URL',
+  'MOUNT_PATH',
   'SAVE_REQUEST',
 ];
 const env = {};

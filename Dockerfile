@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV MOUNT_URL=/phpmyadmin/
+ENV MOUNT_PATH=/phpmyadmin/
 
 COPY package.json package-lock.json ./
 RUN npm install --production --no-optional
@@ -17,7 +17,7 @@ RUN npm run lint
 
 # release
 FROM base as release
-COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/src ./src
 
 VOLUME [ "/usr/src/app/logs" ]
 

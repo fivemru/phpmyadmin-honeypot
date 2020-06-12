@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 ENV PORT=3000
 ENV NODE_ENV=development
-ENV MOUNT_URL=/phpmyadmin/
+ENV MOUNT_PATH=/phpmyadmin/
 
 COPY package.json package-lock.json ./
 RUN npm install
