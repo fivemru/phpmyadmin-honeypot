@@ -1,7 +1,5 @@
-const path = require('path');
 const express = require('express');
-
-const PUBLIC_PATH = path.resolve(__dirname, '../../public');
+const { PUBLIC_PATH } = require('../config/env');
 
 const router = express.Router();
 

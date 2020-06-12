@@ -1,21 +1,22 @@
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const { PORT, MOUNT_URL = '/phpmyadmin/' } = require('./config/env');
+const {
+  PORT,
+  PUBLIC_PATH,
+  MOUNT_PATH = '/phpmyadmin/',
+} = require('./config/env');
 const { logRequest } = require('./utils/logRequest');
 const { saveRequest } = require('./utils/saveToFile');
 const { defineRealIp } = require('./utils/defineRealIp');
 const pages = require('./routes/pages');
 const assets = require('./routes/assets');
 
-const PUBLIC_PATH = path.resolve(__dirname, '../public');
-const VIEWS_DIR = path.resolve(__dirname, './views');
-
 const app = express();
 
 app.use(defineRealIp);
 app.set('view engine', 'ejs');
-app.set('views', VIEWS_DIR);
+app.set('views', path.resolve(__dirname, './views'));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,14 +28,14 @@ app.use((req, res, next) => {
 
 // redirect all requests to mount url
 app.use((req, res, next) => {
-  if (!req.originalUrl.startsWith(MOUNT_URL)) {
-    return res.redirect(`${MOUNT_URL}`);
+  if (!req.originalUrl.startsWith(MOUNT_PATH)) {
+    return res.redirect(`${MOUNT_PATH}`);
   }
   next();
 });
 
 // pages
-app.use(MOUNT_URL, assets, [logRequest, pages]);
+app.use(MOUNT_PATH, assets, [logRequest, pages]);
 
 // 404
 app.use(async (req, res) => {

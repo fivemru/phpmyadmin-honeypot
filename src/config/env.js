@@ -1,3 +1,5 @@
+const path = require('path');
+
 const fields = [
   'PORT',
   'TG_BOT_TOKEN',
@@ -32,5 +34,7 @@ for (const key of fields) {
 
   env[key] = value;
 }
+
+env.PUBLIC_PATH = path.resolve(__dirname, '../../public');
 
 module.exports = { ...env, env };
