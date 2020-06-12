@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+  dev:
+    container_name: phpmyadmin_honeypot_dev
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    image: phpmyadmin-honeypot:dev
+    ports:
+      - 3000:3000
+    env_file: "./.env"
+    volumes:
+      - ./:/usr/src/app/
+      - ./logs/:/usr/src/app/logs/
+      - /usr/src/app/node_modules/
+
+  prod:
+    container_name: phpmyadmin_honeypot_prod
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: phpmyadmin-honeypot:latest
+    ports:
+      - 3000:3000
+    env_file: "./.env"
+    volumes:
+      - ./logs/:/usr/src/app/logs/
+      - ./:/usr/src/app/
+

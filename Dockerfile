@@ -19,7 +19,7 @@ RUN npm run lint
 FROM base as release
 COPY --from=build /usr/src/app/src ./src
 
-VOLUME [ "/usr/src/app/logs" ]
+VOLUME [ "/usr/src/app/logs/" ]
 
 EXPOSE $PORT
 ENTRYPOINT [ "node", "./src/index.js" ]

@@ -1,9 +1,22 @@
 {
   "name": "phpmyadmin-honeypot",
   "version": "1.0.0",
-  "description": "",
+  "author": "fivem",
+  "license": "MIT",
+  "description": "Sending messages to the Telegram messenger when trying to log in phpmyadmin honeypot.",
+  "keywords": [
+    "phpmyadmin",
+    "honeypot",
+    "node",
+    "nodejs",
+    "telegram",
+    "docker",
+    "notifications",
+    "docker-compose"
+  ],
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/index.js",
     "watch": "nodemon ./src/index.js",
     "lint": "eslint ./src/"
   },
@@ -15,14 +28,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/fivem-utils/phpmyadmin-honeypot.git"
+    "url": "git+ssh://git@github.com/fivemru/phpmyadmin-honeypot.git"
   },
-  "author": "fivem",
-  "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/fivem-utils/phpmyadmin-honeypot/issues"
+    "url": "https://github.com/fivemru/phpmyadmin-honeypot/issues"
   },
-  "homepage": "https://gitlab.com/fivem-utils/phpmyadmin-honeypot#readme",
+  "homepage": "https://github.com/fivemru/phpmyadmin-honeypot",
   "devDependencies": {
     "eslint": "^7.2.0",
     "nodemon": "^2.0.4"

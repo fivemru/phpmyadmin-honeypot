@@ -10,5 +10,6 @@ COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 
+VOLUME [ "/usr/src/app/logs/" ]
 EXPOSE $PORT
 ENTRYPOINT [ "npm", "run", "watch" ]
